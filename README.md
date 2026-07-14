@@ -1,49 +1,42 @@
-# Executive Sales Intelligence Dashboard
+# Silver Line Streamlit Portal
 
-This Streamlit application recreates and automates the company's manually prepared executive summary.
+A full Streamlit + SQLite portal for RD Electronics Silver Line partner referrals.
 
-## Included metrics
+## Features
 
-- MTD Sales, Target and Achievement
-- Cash Sales, Target and Achievement
-- YTD Sales, Target and Achievement
-- Days Remaining
-- Required Run Rate
-- Current Run Rate
-- Risk Level
-- Zone Performance
-- Branch Categorization
-- Road to Target
-- MTD vs YTD Achievement
-- Highest Value Contributors
-- Daily Tracking
-- Management Insights
-- Excel and PDF exports
+- Admin login
+- Partner login with unique partner code and password
+- Admin dashboard with KPIs, charts, leaderboard and CSV export
+- Admin can add partners and generate partner login codes
+- Admin can add referrals for any partner
+- Partner can add customer referrals
+- Partner can view own referrals and commission status
+- SQLite database created automatically on first run
 
-## Run locally
+## Demo Login
+
+Admin:
+
+- Username: `admin`
+- Password: `admin123`
+
+Demo partner passwords are `partner001`, `partner002`, etc. Their usernames are their partner codes, visible inside the admin partner directory.
+
+## Run Locally
 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy
+## Deploy on Streamlit Cloud
 
-Upload the project to GitHub and deploy `app.py` on Streamlit Community Cloud.
+1. Create a GitHub repository.
+2. Upload `app.py`, `requirements.txt`, `database.sql`, and this README.
+3. Go to Streamlit Cloud.
+4. Select your repo and set main file as `app.py`.
+5. Deploy.
 
+## Important
 
-## Single-file workflow
-
-This version requires only **one Excel workbook**.
-
-The workbook must contain:
-- `Working Sheet`
-- `Raw Data`
-
-The included demo workbook is `data/Ibrahim.xlsx`. You do not need separate MTD and YTD files.
-
-
-## Fix included
-
-Excel export now safely handles blank, NaN, and infinite calculated values, preventing
-the `Cannot convert {0!r} to Excel` error on Streamlit Cloud.
+Change the default admin password before using it with real data. This demo stores data in local SQLite. For serious production use, connect PostgreSQL/Supabase/MySQL instead.
