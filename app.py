@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import io
+import math
 from calendar import monthrange
 from datetime import datetime
 from pathlib import Path
@@ -88,6 +89,16 @@ def pct(v):
 def safe_ratio(a, b):
     return a / b if b else 0
 
+def excel_safe(value):
+    """Convert pandas/numpy values into values that openpyxl can safely write."""
+    if hasattr(value, "item"):
+        value = value.item()
+    if pd.isna(value):
+        return None
+    if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+        return None
+    return value
+
 def prepare_working(df):
     out = df.copy()
     needed = [
@@ -133,7 +144,7 @@ def make_excel_report(zone, top, metrics):
         ws2.cell(1,j).fill = PatternFill("solid", fgColor="223F72")
     for i, row in enumerate(zone.itertuples(index=False),2):
         for j, v in enumerate(row,1):
-            ws2.cell(i,j,v.item() if hasattr(v,"item") else v)
+            ws2.cell(i,j,excel_safe(v))
 
     ws3 = wb.create_sheet("Top Contributors")
     for j, c in enumerate(top.columns,1):
@@ -141,7 +152,7 @@ def make_excel_report(zone, top, metrics):
         ws3.cell(1,j).fill = PatternFill("solid", fgColor="223F72")
     for i, row in enumerate(top.itertuples(index=False),2):
         for j, v in enumerate(row,1):
-            ws3.cell(i,j,v.item() if hasattr(v,"item") else v)
+            ws3.cell(i,j,excel_safe(v))
 
     for sheet in wb.worksheets:
         for col in sheet.columns:
@@ -273,9 +284,9 @@ zone = filtered.groupby("Zone", as_index=False).agg(
         "YTD SV":("YTD SV","sum"),
     }
 )
-zone["MTD ACH"] = zone["MTD SV"] / zone["MTD TGT"].replace(0,pd.NA)
-zone["CS ACH"] = zone["CS SV"] / zone["CS TGT"].replace(0,pd.NA)
-zone["YTD ACH"] = zone["YTD SV"] / zone["YTD TGT"].replace(0,pd.NA)
+zone["MTD ACH"] = (zone["MTD SV"] / zone["MTD TGT"].replace(0,pd.NA)).fillna(0)
+zone["CS ACH"] = (zone["CS SV"] / zone["CS TGT"].replace(0,pd.NA)).fillna(0)
+zone["YTD ACH"] = (zone["YTD SV"] / zone["YTD TGT"].replace(0,pd.NA)).fillna(0)
 
 zone_display = zone.copy()
 for col in ["MTD TGT","MTD SV","CS TGT","CS SV","LDS","PDR","TDS","YTD TGT","YTD SV"]:

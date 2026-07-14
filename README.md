@@ -41,3 +41,9 @@ The workbook must contain:
 - `Raw Data`
 
 The included demo workbook is `data/Ibrahim.xlsx`. You do not need separate MTD and YTD files.
+
+
+## Fix included
+
+Excel export now safely handles blank, NaN, and infinite calculated values, preventing
+the `Cannot convert {0!r} to Excel` error on Streamlit Cloud.
