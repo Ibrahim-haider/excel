@@ -1,27 +1,24 @@
-# Branch Intelligence Platform — Milestone 1
+# Executive Sales Intelligence Dashboard
 
-A presentation-ready Streamlit proof of concept for automating MTD and YTD analysis.
+This Streamlit application recreates and automates the company's manually prepared executive summary.
 
-## Included features
+## Included metrics
 
-- Role-based demo login
-- Bundled fictional MTD and YTD Excel files
-- Optional Excel uploads
-- Executive KPI dashboard
-- Branch ranking and target achievement
-- Cash versus installment analysis
-- Monthly YTD trend
-- Automatic management conclusions
-- Excel management report export
-- PDF executive summary export
-- Branch and month filters
-- Professional dark dashboard interface
-
-## Demo credentials
-
-- Admin: `admin` / `admin123`
-- Manager: `manager` / `manager123`
-- Analyst: `analyst` / `analyst123`
+- MTD Sales, Target and Achievement
+- Cash Sales, Target and Achievement
+- YTD Sales, Target and Achievement
+- Days Remaining
+- Required Run Rate
+- Current Run Rate
+- Risk Level
+- Zone Performance
+- Branch Categorization
+- Road to Target
+- MTD vs YTD Achievement
+- Highest Value Contributors
+- Daily Tracking
+- Management Insights
+- Excel and PDF exports
 
 ## Run locally
 
@@ -32,11 +29,15 @@ streamlit run app.py
 
 ## Deploy
 
-1. Push this folder to a GitHub repository.
-2. Open Streamlit Community Cloud.
-3. Select the repository and `app.py`.
-4. Deploy.
+Upload the project to GitHub and deploy `app.py` on Streamlit Community Cloud.
 
-## Important
 
-All bundled figures are fictional and for demonstration only.
+## Single-file workflow
+
+This version requires only **one Excel workbook**.
+
+The workbook must contain:
+- `Working Sheet`
+- `Raw Data`
+
+The included demo workbook is `data/Ibrahim.xlsx`. You do not need separate MTD and YTD files.
